@@ -1,0 +1,39 @@
+<%= form_with(model: ingredient, class: "contents") do |form| %>
+  <% if ingredient.errors.any? %>
+    <div id="error_explanation" class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+  <h2 class="mb-2 font-semibold">
+    <%= pluralize(ingredient.errors.count, "error") %> prevented this ingredient from being saved:
+  </h2>
+
+  <ul class="list-disc ml-5 space-y-1 text-sm">
+    <% ingredient.errors.each do |error| %>
+      <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+</div>
+  <% end %>
+
+ <div class="mb-6">
+  <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_field :name, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
+</div>
+
+<div class="mb-6">
+  <%= form.label :category, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_field :category, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
+</div>
+
+<div class="mb-6">
+  <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_area :description, rows: 3, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
+</div>
+
+<div class="mb-6">
+  <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_area :notes, rows: 2, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
+</div>
+
+  <div class="flex justify-end">
+  <%= form.submit "Save Ingredient", class: "inline-flex justify-center rounded-md bg-emerald-600 px-4 py-2 text-white font-semibold shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+</div>
+<% end %>
