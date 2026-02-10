@@ -23,7 +23,6 @@
     "PORT": "3000",
     "VISUAL": "code --wait",
 	"DATABASE_URL": "postgres://postgres:postgres@postgres:5432/island_formulator_development",
-	"RAILS_DEVELOPMENT_HOSTS": "${remoteEnv:CODESPACE_NAME}.app.github.dev",
     "BUNDLER_EDITOR": "code"
 	},
   "customizations": {
