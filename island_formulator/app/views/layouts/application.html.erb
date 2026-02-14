@@ -24,7 +24,34 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-28 px-5 flex flex-col">
+    <nav class="mb-8 px-6 py-4 bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <%# Left side - App name and main nav %>
+    <div class="flex items-center gap-8">
+      <%= link_to root_path, class: "text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors" do %>
+        Ingredient Knowledge Base
+      <% end %>
+      
+      <% if authenticated? %>
+        <%= link_to "My Ingredients", ingredients_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+      <% end %>
+    </div>
+    
+    <%# Right side - Auth links %>
+    <div class="flex items-center gap-4">
+      <% if authenticated? %>
+        <span class="text-sm text-gray-500">
+          <%= Current.user.email_address %>
+        </span>
+        <%= button_to "Logout", session_path, method: :delete, class: "px-4 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" %>
+      <% else %>
+        <%= link_to "Sign Up", new_user_path, class: "px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors" %>
+        <%= link_to "Login", new_session_path, class: "px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
       <%= yield %>
     </main>
   </body>

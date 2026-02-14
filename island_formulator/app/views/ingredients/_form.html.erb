@@ -33,6 +33,24 @@
   <%= form.text_area :notes, rows: 2, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
 </div>
 
+<div class="mb-4">
+  <%= form.label :tag_ids, "Benefits & Properties", class: "block font-bold mb-2" %>
+  <div class="grid grid-cols-2 gap-2">
+    <%# collection_check_boxes is a powerful Rails helper that generates all the checkboxes for us! %>
+    <%# It takes 4 main arguments: 
+        1. The field name (:tag_ids)
+        2. The collection to loop through (Tag.all)
+        3. The value to save (:id)
+        4. The text to show the user (:name)
+    %>
+    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |cb| %>
+      <div class="flex items-center">
+        <%= cb.check_box class: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <%= cb.label class: "ml-2 text-sm text-gray-700" %>
+      </div>
+    <% end %>
+  </div>
+</div>
   <div class="flex justify-end">
   <%= form.submit "Save Ingredient", class: "inline-flex justify-center rounded-md bg-emerald-600 px-4 py-2 text-white font-semibold shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
 </div>
