@@ -64,7 +64,7 @@ class IngredientsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-   
+   #Permit tag_ids for many-to-many tagging system
      def ingredient_params
   # Add tag_ids: [] to the permit list
   # The [] means we are expecting an ARRAY of IDs (since you can check multiple boxes).
