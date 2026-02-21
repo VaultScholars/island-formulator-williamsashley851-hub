@@ -1,0 +1,49 @@
+<% content_for :title, "Showing recipe" %>
+
+<div class="max-w-4xl mx-auto p-6">
+  <div class="flex justify-between items-start mb-6">
+    <div>
+      <h1 class="text-4xl font-bold text-gray-900"><%= @recipe.title %></h1>
+      <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-2 font-semibold uppercase tracking-wide">
+        <%= @recipe.product_type %>
+      </span>
+    </div>
+    <div class="space-x-2">
+      <%= link_to "Edit", edit_recipe_path(@recipe), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+      <%= link_to "Back", recipes_path, class: "text-gray-600 hover:underline" %>
+    </div>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="md:col-span-1">
+      <% if @recipe.photo.attached? %>
+        <%= image_tag @recipe.photo, class: "w-full h-auto object-cover rounded-xl shadow-lg border-4 border-white" %>
+      <% else %>
+        <div class="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400 italic">
+          No photo uploaded
+        </div>
+      <% end %>
+      
+      <div class="mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">Ingredients</h2>
+        <ul class="space-y-3">
+          <% @recipe.recipe_ingredients.each do |ri| %>
+            <li class="flex justify-between items-center">
+              <span class="font-medium text-gray-700"><%= ri.ingredient.name %></span>
+              <span class="text-gray-500 bg-gray-100 px-2 py-1 rounded text-sm"><%= ri.quantity %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="md:col-span-2">
+      <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 h-full">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Method</h2>
+        <div class="prose prose-green max-w-none text-gray-700 leading-relaxed">
+          <%= simple_format @recipe.method %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

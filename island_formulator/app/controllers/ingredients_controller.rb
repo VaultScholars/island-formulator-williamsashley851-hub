@@ -69,6 +69,6 @@ class IngredientsController < ApplicationController
   # Add tag_ids: [] to the permit list
   # The [] means we are expecting an ARRAY of IDs (since you can check multiple boxes).
   # Note: tag_ids: [] must be the LAST parameter in the permit() call
-  params.require(:ingredient).permit(:name, :category, :description, :notes, tag_ids: [])
+   params.require(:ingredient).permit(:name, :category, :description, :photo)
  end
 end
