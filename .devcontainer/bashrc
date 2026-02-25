@@ -1,0 +1,16 @@
+# You may uncomment the following lines if you want `ls' to be colorized:
+export LS_OPTIONS='--color=auto'
+# eval "$(dircolors)"
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+
+# vim mode
+set -o vi
+
+# Put system binaries first to ensure system rake is used during gem builds
+# This prevents circular dependency when native extensions (like herb) run rake
+# System paths must come before project bin to avoid loading project's bin/rake
+export PATH=/usr/local/bin:/usr/bin:/bin:/workspaces/island-formulator/bin:${PATH}
+export RAILS_DEVELOPMENT_HOSTS="$CODESPACE_NAME-3000.app.github.dev"
+

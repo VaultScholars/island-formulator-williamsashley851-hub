@@ -1,0 +1,57 @@
+{
+  "name": "island-formulator",
+  "dockerComposeFile": ["compose.yaml"],
+  "service": "rails-app",
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [3000,5432],
+  "portsAttributes": {
+    "3000": {
+      "label": "App",
+      "onAutoForward": "notify"
+    }
+  },
+  "containerEnv": {
+    "USER_UID": "${localEnv:UID}",
+    "USER_GID": "${localEnv:UID}",
+    "OVERMIND_NO_PORT": "1",
+    "OVERMIND_PROCFILE": "Procfile.dev",
+	"RAILS_ENV": "development",
+    "BUNDLE_PATH": "/bundler",
+    "DBHOST": "postgres",
+    "PORT": "3000",
+    "VISUAL": "code --wait",
+	"DATABASE_URL": "postgres://postgres:postgres@postgres:5432/island_formulator_development",
+    "BUNDLER_EDITOR": "code"
+	},
+  "customizations": {
+    "vscode": {
+      "settings": {
+				"rubyLsp.rubyVersionManager": {
+  					"identifier": "auto"
+				}
+			},
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-docker",
+        "aliariff.vscode-erb-beautify",
+        "GitLab.gitlab-workflow",
+        "bung87.rails",
+        "shanehofstetter.rails-i18n",
+        "aki77.rails-routes",
+        "Shopify.ruby-lsp",
+        "bradlc.vscode-tailwindcss",
+        "PascalReitermann93.vscode-yaml-sort",
+        "redhat.vscode-yaml",
+        "esbenp.prettier-vscode",
+        "austenc.tailwind-docs",
+        "karunamurti.haml",
+        "hbenl.vscode-test-explorer",
+        "github.vscode-github-actions",
+        "streetsidesoftware.code-spell-checker",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}
