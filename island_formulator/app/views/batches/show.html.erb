@@ -1,0 +1,42 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <div class="bg-white shadow rounded-lg p-8 border-l-8 border-green-500">
+    <div class="flex justify-between items-start mb-8">
+      <div>
+        <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Batch Log</p>
+        <h1 class="font-bold text-4xl text-gray-900"><%= @batch.recipe.title %></h1>
+        <p class="text-lg text-gray-600 mt-2">Made on <%= @batch.made_on.strftime("%A, %B %d, %Y") %></p>
+      </div>
+      <%= link_to "View Recipe", @batch.recipe, class: "bg-blue-50 text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-blue-100" %>
+    </div>
+
+    <div class="mb-10">
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Ingredients Used</h2>
+      <div class="bg-gray-50 rounded-xl p-6">
+        <ul class="divide-y divide-gray-200">
+          <% @batch.recipe.recipe_ingredients.each do |ri| %>
+            <li class="py-3 flex justify-between">
+              <span class="font-medium text-gray-800"><%= ri.ingredient.name %></span>
+              <span class="text-gray-600"><%= ri.quantity %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <% if @batch.notes.present? %>
+      <div class="mb-10">
+        <h2 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Production Notes</h2>
+        <div class="prose prose-green max-w-none text-gray-700 bg-green-50 p-6 rounded-xl italic">
+          <%= simple_format @batch.notes %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+      <%= link_to "Back to History", batches_path, class: "text-gray-600 hover:underline font-medium" %>
+      <div class="flex gap-3">
+        <%= button_to "Delete Log", @batch, method: :delete, class: "text-red-600 text-sm hover:underline", data: { confirm: "Are you sure you want to delete this batch log?" } %>
+      </div>
+    </div>
+  </div>
+</div>

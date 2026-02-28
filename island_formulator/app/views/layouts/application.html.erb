@@ -28,19 +28,21 @@
     <nav class="mb-8 px-6 py-4 bg-white border-b border-gray-200 shadow-sm">
   <div class="max-w-7xl mx-auto flex items-center justify-between">
     
-  <%# Left side - App name and main nav %>
+    <!-- Left side - App name and main nav -->
     <div class="flex items-center gap-8">
       <%= link_to root_path, class: "text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors" do %>
-        Ingredient Knowledge Base
+        Dashboard
       <% end %>
       
       <% if authenticated? %>
         <%= link_to "My Recipes", recipes_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
-      <%= link_to "My Ingredients", ingredients_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
-        <% end %>
+        <%= link_to "My Ingredients", ingredients_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+        <%= link_to "Inventory", inventory_items_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+        <%= link_to "Batch History", batches_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+      <% end %>
     </div>
     
-    <%# Right side - Auth links %>
+    <!-- Right side - Auth links -->
     <div class="flex items-center gap-4">
       <% if authenticated? %>
         <span class="text-sm text-gray-500">

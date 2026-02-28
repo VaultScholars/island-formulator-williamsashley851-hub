@@ -8,10 +8,14 @@
         <%= @recipe.product_type %>
       </span>
     </div>
-    <div class="space-x-2">
-      <%= link_to "Edit", edit_recipe_path(@recipe), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-      <%= link_to "Back", recipes_path, class: "text-gray-600 hover:underline" %>
-    </div>
+   <div class="space-x-2">
+  <%= link_to "Edit", edit_recipe_path(@recipe), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  <%= link_to "Back", recipes_path, class: "text-gray-600 hover:underline" %>
+
+  <!-- Week 4 button -->
+  <%= link_to "Log a New Batch", new_batch_path(recipe_id: @recipe.id),
+      class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+</div>
   </div>
   
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

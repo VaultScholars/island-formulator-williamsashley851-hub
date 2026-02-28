@@ -1,0 +1,42 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 text-green-500 font-medium rounded-lg inline-block mb-5" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Inventory</h1>
+    <%= link_to "New Inventory Item", new_inventory_item_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="inventory_items" class="min-w-full mt-8">
+    <div class="overflow-x-auto shadow rounded-lg">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-50 border-b">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ingredient</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Brand</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purchased</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% @inventory_items.each do |item| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900"><%= item.ingredient.name %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.brand %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.size %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.location %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.purchase_date.strftime("%b %d, %Y") %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <%= link_to "Show", item, class: "text-blue-600 hover:text-blue-900 mr-3" %>
+                <%= link_to "Edit", edit_inventory_item_path(item), class: "text-gray-600 hover:text-gray-900" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

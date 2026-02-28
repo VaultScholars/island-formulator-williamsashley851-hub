@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_21_162232) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_28_185208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_162232) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "batches", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "made_on"
+    t.text "notes"
+    t.bigint "recipe_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["recipe_id"], name: "index_batches_on_recipe_id"
+    t.index ["user_id"], name: "index_batches_on_user_id"
+  end
+
   create_table "ingredients", force: :cascade do |t|
     t.string "category"
     t.datetime "created_at", null: false
@@ -56,6 +67,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_162232) do
   create_table "ingredients_tags", id: false, force: :cascade do |t|
     t.bigint "ingredient_id", null: false
     t.bigint "tag_id", null: false
+  end
+
+  create_table "inventory_items", force: :cascade do |t|
+    t.string "brand"
+    t.datetime "created_at", null: false
+    t.bigint "ingredient_id", null: false
+    t.string "location"
+    t.text "notes"
+    t.date "purchase_date"
+    t.string "size"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["ingredient_id"], name: "index_inventory_items_on_ingredient_id"
+    t.index ["user_id"], name: "index_inventory_items_on_user_id"
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
@@ -103,7 +128,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_21_162232) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "batches", "recipes"
+  add_foreign_key "batches", "users"
   add_foreign_key "ingredients", "users"
+  add_foreign_key "inventory_items", "ingredients"
+  add_foreign_key "inventory_items", "users"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "users"

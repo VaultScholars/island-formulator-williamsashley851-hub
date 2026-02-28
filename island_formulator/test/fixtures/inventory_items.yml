@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  ingredient: one
+  brand: MyString
+  size: MyString
+  location: MyString
+  purchase_date: 2026-02-28
+  notes: MyText
+
+two:
+  user: two
+  ingredient: two
+  brand: MyString
+  size: MyString
+  location: MyString
+  purchase_date: 2026-02-28
+  notes: MyText
