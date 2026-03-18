@@ -1,34 +1,46 @@
-<div class="w-full">
+<% content_for :title, "Batch History" %>
+
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
+
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 text-green-500 font-medium rounded-lg inline-block mb-5" id="notice"><%= notice %></p>
+    <p class="text-[13px] text-sagedk bg-sagebg border border-sage px-4 py-2 inline-block mb-6">
+      <%= notice %>
+    </p>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Batch History</h1>
-    <%= link_to "Log New Batch", new_batch_path, class: "rounded-lg py-3 px-5 bg-green-600 text-white block font-medium" %>
+  <div class="flex justify-between items-end pb-5 mb-10 border-b-2 border-rule">
+    <h1 class="font-serif text-5xl font-normal text-ink">Batch History</h1>
+    <%= link_to "Log New Batch", new_batch_path,
+        class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold no-underline bg-sagedk text-paper border-[1.5px] border-sagedk px-5 py-2.5 hover:bg-sage hover:border-sage" %>
   </div>
 
-  <div id="batches" class="min-w-full mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-    <% @batches.each do |batch| %>
-      <div class="bg-white shadow rounded-lg p-6 border-l-4 border-green-500">
-        <div class="flex justify-between items-start">
-          <div>
-            <h2 class="font-bold text-xl text-gray-900"><%= batch.recipe.title %></h2>
-            <p class="text-sm text-gray-500"><%= batch.made_on.strftime("%B %d, %Y") %></p>
+  <% if @batches.empty? %>
+    <div class="text-center py-16 px-8 bg-paper border-[1.5px] border-rule font-serif italic text-xl text-muted">
+      <p class="mb-4">No batches logged yet. Go make something!</p>
+      <%= link_to "Log your first batch", new_batch_path,
+          class: "text-sagedk no-underline border-b-[1.5px] border-sagedk" %>
+    </div>
+  <% else %>
+    <div class="grid grid-cols-2 gap-7">
+      <% @batches.each do |batch| %>
+        <div class="bg-paper border-[1.5px] border-rule border-l-[5px] border-l-clay flex flex-col gap-3 p-6 transition-shadow duration-200 hover:shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="font-serif text-xl font-normal text-ink mb-1"><%= batch.recipe.title %></h2>
+              <p class="text-[11px] tracking-[0.08em] uppercase font-bold text-muted">
+                <%= batch.made_on.strftime("%B %d, %Y") %>
+              </p>
+            </div>
+            <%= link_to "View Details →", batch,
+                class: "text-[10px] tracking-[0.1em] uppercase font-bold text-claydk no-underline border-b-[1.5px] border-claydk pb-px shrink-0 hover:text-clay hover:border-clay" %>
           </div>
-          <%= link_to "View Details", batch, class: "text-sm text-blue-600 hover:underline" %>
+          <% if batch.notes.present? %>
+            <p class="font-serif text-sm italic text-muted leading-relaxed border-l-2 border-claybg pl-3">
+              "<%= batch.notes.truncate(100) %>"
+            </p>
+          <% end %>
         </div>
-        
-        <% if batch.notes.present? %>
-          <div class="mt-4 text-gray-600 italic text-sm">
-            "<%= batch.notes.truncate(100) %>"
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-    
-    <% if @batches.empty? %>
-      <p class="text-gray-500">No batches logged yet. Go make something!</p>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

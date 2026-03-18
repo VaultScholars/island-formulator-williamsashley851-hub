@@ -1,42 +1,56 @@
-<div class="w-full">
+<% content_for :title, "Inventory" %>
+
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
+
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 text-green-500 font-medium rounded-lg inline-block mb-5" id="notice"><%= notice %></p>
+    <p class="text-[13px] text-sagedk bg-sagebg border border-sage px-4 py-2 inline-block mb-6 tracking-[0.04em]">
+      <%= notice %>
+    </p>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Inventory</h1>
-    <%= link_to "New Inventory Item", new_inventory_item_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="flex justify-between items-end pb-5 mb-10 border-b-2 border-rule">
+    <h1 class="font-serif text-5xl font-normal text-ink">Inventory</h1>
+    <%= link_to "Record Purchase", new_inventory_item_path,
+        class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold no-underline bg-sagedk text-paper border-[1.5px] border-sagedk px-5 py-2.5 hover:bg-sage hover:border-sage" %>
   </div>
 
-  <div id="inventory_items" class="min-w-full mt-8">
-    <div class="overflow-x-auto shadow rounded-lg">
-      <table class="min-w-full bg-white">
-        <thead class="bg-gray-50 border-b">
+  <% if @inventory_items.any? %>
+    <div class="border-[1.5px] border-rule shadow-sm overflow-x-auto">
+      <table class="w-full border-collapse bg-paper">
+        <thead class="bg-parchment border-b-2 border-rule">
           <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ingredient</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Brand</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purchased</th>
-            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            <th class="px-5 py-3 text-left text-[9px] tracking-[0.2em] uppercase font-bold text-muted whitespace-nowrap">Ingredient</th>
+            <th class="px-5 py-3 text-left text-[9px] tracking-[0.2em] uppercase font-bold text-muted whitespace-nowrap">Brand</th>
+            <th class="px-5 py-3 text-left text-[9px] tracking-[0.2em] uppercase font-bold text-muted whitespace-nowrap">Size</th>
+            <th class="px-5 py-3 text-left text-[9px] tracking-[0.2em] uppercase font-bold text-muted whitespace-nowrap">Location</th>
+            <th class="px-5 py-3 text-left text-[9px] tracking-[0.2em] uppercase font-bold text-muted whitespace-nowrap">Purchased</th>
+            <th class="px-5 py-3 text-right text-[9px] tracking-[0.2em] uppercase font-bold text-muted whitespace-nowrap">Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200">
+        <tbody>
           <% @inventory_items.each do |item| %>
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900"><%= item.ingredient.name %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.brand %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.size %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.location %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-500"><%= item.purchase_date.strftime("%b %d, %Y") %></td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <%= link_to "Show", item, class: "text-blue-600 hover:text-blue-900 mr-3" %>
-                <%= link_to "Edit", edit_inventory_item_path(item), class: "text-gray-600 hover:text-gray-900" %>
+            <tr class="ms-row border-b border-parchment last:border-b-0 hover:bg-sagebg transition-colors">
+              <td class="px-5 py-3 font-serif text-base text-ink whitespace-nowrap"><%= item.ingredient.name %></td>
+              <td class="px-5 py-3 text-sm text-muted whitespace-nowrap"><%= item.brand %></td>
+              <td class="px-5 py-3 text-sm text-muted whitespace-nowrap"><%= item.size %></td>
+              <td class="px-5 py-3 text-sm text-muted whitespace-nowrap"><%= item.location %></td>
+              <td class="px-5 py-3 text-sm text-muted whitespace-nowrap"><%= item.purchase_date.strftime("%b %d, %Y") %></td>
+              <td class="px-5 py-3 text-right whitespace-nowrap">
+                <%= link_to "View", item,
+                    class: "text-[10px] tracking-[0.1em] uppercase font-bold text-sagedk no-underline border-b border-sagedk pb-px hover:opacity-75" %>
+                <%= link_to "Edit", edit_inventory_item_path(item),
+                    class: "text-[10px] tracking-[0.1em] uppercase font-bold text-muted no-underline border-b border-muted pb-px ml-4 hover:opacity-75" %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
-  </div>
+  <% else %>
+    <div class="text-center py-16 px-8 bg-paper border-[1.5px] border-rule font-serif italic text-xl text-muted">
+      <p class="mb-4">No inventory recorded yet.</p>
+      <%= link_to "Record your first purchase", new_inventory_item_path,
+          class: "text-sagedk no-underline border-b-[1.5px] border-sagedk" %>
+    </div>
+  <% end %>
 </div>

@@ -1,76 +1,92 @@
-<%= form_with(model: ingredient, class: "contents") do |form| %>
-  <% if ingredient.errors.any? %>
-    <div id="error_explanation" class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-  <h2 class="mb-2 font-semibold">
-    <%= pluralize(ingredient.errors.count, "error") %> prevented this ingredient from being saved:
-  </h2>
+<%= form_with(model: ingredient) do |form| %>
+  <div class="max-w-2xl bg-paper border-[1.5px] border-rule shadow-sm">
+    <div class="h-[5px] bg-sage"></div>
+    <div class="p-10">
 
-  <ul class="list-disc ml-5 space-y-1 text-sm">
-    <% ingredient.errors.each do |error| %>
-      <li><%= error.full_message %></li>
-    <% end %>
-  </ul>
-</div>
-  <% end %>
+      <% if ingredient.errors.any? %>
+        <div class="bg-rosebg border-[1.5px] border-rose px-5 py-4 mb-6">
+          <h2 class="text-[12px] tracking-[0.1em] uppercase font-bold text-rosedk mb-2">
+            <%= pluralize(ingredient.errors.count, "error") %> prevented this ingredient from being saved
+          </h2>
+          <ul class="list-disc pl-5">
+            <% ingredient.errors.each do |error| %>
+              <li class="text-[13px] text-rosedk mb-1"><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
- <div class="mb-6">
-  <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
-  <%= form.text_field :name, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
-</div>
-
-<div class="mb-6">
-  <%= form.label :category, class: "block text-sm font-medium text-gray-700" %>
-  <%= form.text_field :category, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
-</div>
-
-<div class="mb-6">
-  <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
-  <%= form.text_area :description, rows: 3, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
-</div>
-
-<div class="mb-6">
-  <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
-  <%= form.text_area :notes, rows: 2, class: "mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" %>
-</div>
-
-<div class="bg-white shadow p-6 rounded-lg">
-  <%= form.label :photo, "Ingredient Photo", class: "block font-bold text-gray-700 mb-2" %>
-  <div class="flex items-center justify-center w-full">
-    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-      <div class="flex flex-col items-center justify-center pt-5 pb-6">
-        <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-        </svg>
-        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-        <p class="text-xs text-gray-500">PNG, JPG or GIF</p>
+      <div class="mb-6">
+        <%= form.label :name, class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+        <%= form.text_field :name, placeholder: "e.g. Shea Butter",
+            class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-sage" %>
       </div>
-      <%= form.file_field :photo, accept: "image/*", class: "hidden" %>
-    </label>
-  </div>
-  <% if ingredient.photo.attached? %>
-    <p class="mt-2 text-sm text-green-600">✓ Current photo: <%= ingredient.photo.filename %></p>
-  <% end %>
 
-</div>
-<div class="mb-4">
-  <%= form.label :tag_ids, "Benefits & Properties", class: "block font-bold mb-2" %>
-  <div class="grid grid-cols-2 gap-2">
-    <%# collection_check_boxes is a powerful Rails helper that generates all the checkboxes for us! %>
-    <%# It takes 4 main arguments: 
-        1. The field name (:tag_ids)
-        2. The collection to loop through (Tag.all)
-        3. The value to save (:id)
-        4. The text to show the user (:name)
-    %>
-    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |cb| %>
-      <div class="flex items-center">
-        <%= cb.check_box class: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
-        <%= cb.label class: "ml-2 text-sm text-gray-700" %>
+      <div class="mb-6">
+        <%= form.label :category, class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+        <%= form.text_field :category, placeholder: "e.g. Butter, Oil, Botanical",
+            class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-sage" %>
       </div>
-    <% end %>
+
+      <div class="mb-6">
+        <%= form.label :description, class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+        <%= form.text_area :description, rows: 3, placeholder: "Describe this ingredient...",
+            class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none resize-y focus:border-sage" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :notes, class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+        <%= form.text_area :notes, rows: 2, placeholder: "Any personal notes...",
+            class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none resize-y focus:border-sage" %>
+      </div>
+
+      <%# Photo upload %>
+      <div class="mb-6">
+        <%= form.label :photo, "Ingredient Photo",
+            class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+        <label class="block bg-parchment border-2 border-dashed border-rule p-8 text-center cursor-pointer hover:border-sage hover:bg-sagebg">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"
+               style="width:32px;height:32px;display:block;margin:0 auto 0.6rem;color:#6E6258;">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+          </svg>
+          <p class="text-[13px] text-muted mb-1">
+            <strong class="text-sagedk">Click to upload</strong> or drag and drop
+          </p>
+          <p class="text-[11px] text-muted tracking-[0.06em]">PNG, JPG or GIF</p>
+          <%= form.file_field :photo, accept: "image/*", class: "hidden" %>
+        </label>
+        <% if ingredient.photo.attached? %>
+          <p class="text-[12px] text-sagedk mt-2">✓ Current photo: <%= ingredient.photo.filename %></p>
+        <% end %>
+      </div>
+
+      <%# Divider %>
+      <div class="flex items-center gap-3 my-7">
+        <div class="flex-1 h-px bg-rule"></div>
+        <div class="w-[5px] h-[5px] bg-sage rotate-45 shrink-0"></div>
+        <div class="flex-1 h-px bg-rule"></div>
+      </div>
+
+      <%# Tags %>
+      <div class="mb-6">
+        <%= form.label :tag_ids, "Benefits & Properties",
+            class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-3" %>
+        <div class="grid grid-cols-2 gap-2">
+          <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |cb| %>
+            <div class="flex items-center gap-2">
+              <%= cb.check_box style: "width:14px;height:14px;accent-color:#2F5C28;cursor:pointer;flex-shrink:0;" %>
+              <%= cb.label class: "text-[13px] text-ink cursor-pointer tracking-[0.03em]" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+    <div class="flex justify-end px-10 py-5 border-t-[1.5px] border-parchment bg-cream">
+      <%= form.submit "Save Ingredient",
+          class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold bg-sagedk text-paper border-[1.5px] border-sagedk px-7 py-2.5 cursor-pointer hover:bg-sage hover:border-sage" %>
+    </div>
   </div>
-</div>
-  <div class="flex justify-end">
-  <%= form.submit "Save Ingredient", class: "inline-flex justify-center rounded-md bg-emerald-600 px-4 py-2 text-white font-semibold shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
-</div>
 <% end %>
+

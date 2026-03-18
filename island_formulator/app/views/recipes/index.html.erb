@@ -1,34 +1,47 @@
 <% content_for :title, "Recipes" %>
 
-<div class="max-w-6xl mx-auto p-6">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-900">My Recipes</h1>
-    <%= link_to "New Recipe", new_recipe_path, class: "bg-green-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-700" %>
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
+
+  <div class="flex justify-between items-end pb-5 mb-10 border-b-2 border-rule">
+    <h1 class="font-serif text-5xl font-normal text-ink">My Recipes</h1>
+    <%= link_to "New Recipe", new_recipe_path,
+        class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold no-underline bg-sagedk text-paper border-[1.5px] border-sagedk px-5 py-2.5 hover:bg-sage hover:border-sage" %>
   </div>
 
   <% if @recipes.empty? %>
-    <div class="text-center py-12 bg-white rounded-lg shadow">
-      <p class="text-gray-500 mb-4">You haven't created any recipes yet.</p>
-      <%= link_to "Create Your First Recipe", new_recipe_path, class: "text-green-600 font-semibold hover:underline" %>
+    <div class="text-center py-16 px-8 bg-paper border-[1.5px] border-rule font-serif italic text-xl text-muted">
+      <p class="mb-4">You haven't created any recipes yet.</p>
+      <%= link_to "Create your first recipe", new_recipe_path,
+          class: "text-sagedk no-underline border-b-[1.5px] border-sagedk" %>
     </div>
   <% else %>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-3 gap-7">
       <% @recipes.each do |recipe| %>
-        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+        <div class="bg-paper border-[1.5px] border-rule flex flex-col shadow-sm transition-shadow duration-200 hover:shadow-md">
           <% if recipe.photo.attached? %>
-            <%= image_tag recipe.photo, class: "w-full h-48 object-cover rounded-t-lg" %>
+            <%= image_tag recipe.photo, class: "w-full h-[200px] object-cover block border-b-[1.5px] border-rule" %>
           <% else %>
-            <div class="w-full h-48 bg-gray-200 rounded-t-lg flex items-center justify-center text-gray-400">
-              No photo
+            <div class="w-full h-[200px] bg-parchment border-b-[1.5px] border-rule flex items-center justify-center">
+              <span class="font-serif italic text-muted text-base">No photo yet</span>
             </div>
           <% end %>
-          
-          <div class="p-4">
-            <h2 class="text-xl font-bold mb-2"><%= link_to recipe.title, recipe, class: "text-gray-900 hover:text-green-600" %></h2>
-            <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-semibold uppercase tracking-wide">
-              <%= recipe.product_type %>
-            </span>
-            <p class="text-gray-500 text-sm mt-2"><%= pluralize(recipe.ingredients.count, 'ingredient') %></p>
+
+          <div class="p-5 flex-1">
+            <% if recipe.product_type.present? %>
+              <span class="text-[9px] tracking-[0.2em] uppercase font-bold text-golddk bg-goldbg border border-gold inline-block px-2.5 py-0.5 mb-3">
+                <%= recipe.product_type %>
+              </span>
+            <% end %>
+            <%= link_to recipe.title, recipe,
+                class: "font-serif text-xl font-normal text-ink no-underline block mb-1 hover:text-sagedk" %>
+            <p class="text-[11px] text-muted tracking-[0.05em]">
+              <%= pluralize(recipe.ingredients.count, 'ingredient') %>
+            </p>
+          </div>
+
+          <div class="px-5 py-3 border-t border-parchment bg-cream">
+            <%= link_to "View Recipe →", recipe,
+                class: "text-[10px] tracking-[0.12em] uppercase font-bold text-sagedk no-underline border-b-[1.5px] border-sagedk pb-px hover:text-sage hover:border-sage" %>
           </div>
         </div>
       <% end %>

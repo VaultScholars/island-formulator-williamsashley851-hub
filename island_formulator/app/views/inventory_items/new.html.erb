@@ -1,7 +1,8 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New Inventory Item</h1>
+<% content_for :title, "New Inventory Item" %>
 
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
+  <%= link_to "← Back to Inventory", inventory_items_path,
+      class: "text-[10px] tracking-[0.14em] uppercase font-bold text-muted no-underline border-b border-rule pb-px inline-block mb-7 hover:text-ink" %>
+  <h1 class="font-serif text-4xl font-normal text-ink mb-8 pb-5 border-b-2 border-rule">Record a Purchase</h1>
   <%= render "form", inventory_item: @inventory_item %>
-
-  <%= link_to "Back to inventory", inventory_items_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 </div>

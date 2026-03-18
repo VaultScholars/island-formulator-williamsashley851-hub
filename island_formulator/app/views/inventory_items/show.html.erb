@@ -1,49 +1,68 @@
-<div class="mx-auto md:w-2/3 w-full flex flex-col items-center">
-  <div class="bg-white shadow rounded-lg p-8 w-full">
-    <div class="flex justify-between items-start mb-6">
-      <div>
-        <h1 class="font-bold text-3xl text-gray-900"><%= @inventory_item.ingredient.name %></h1>
-        <p class="text-gray-500"><%= @inventory_item.brand %></p>
-      </div>
-      <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded uppercase">
-        <%= @inventory_item.ingredient.category %>
-      </span>
-    </div>
+<% content_for :title, @inventory_item.ingredient.name %>
 
-    <% if @inventory_item.photo.attached? %>
-      <div class="mb-6">
-        <%= image_tag @inventory_item.photo, class: "w-full h-64 object-cover rounded-lg shadow-sm" %>
-      </div>
-    <% end %>
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
 
-    <div class="grid grid-cols-2 gap-6 mb-8">
-      <div>
-        <p class="text-sm font-bold text-gray-500 uppercase">Size</p>
-        <p class="text-lg"><%= @inventory_item.size.presence || "Not specified" %></p>
-      </div>
-      <div>
-        <p class="text-sm font-bold text-gray-500 uppercase">Location</p>
-        <p class="text-lg"><%= @inventory_item.location.presence || "Not specified" %></p>
-      </div>
-      <div>
-        <p class="text-sm font-bold text-gray-500 uppercase">Purchase Date</p>
-        <p class="text-lg"><%= @inventory_item.purchase_date.strftime("%B %d, %Y") %></p>
-      </div>
-    </div>
+  <%= link_to "← Back to Inventory", inventory_items_path,
+      class: "text-[10px] tracking-[0.14em] uppercase font-bold text-muted no-underline border-b border-rule pb-px inline-block mb-7 hover:text-ink" %>
 
-    <% if @inventory_item.notes.present? %>
-      <div class="mb-8">
-        <p class="text-sm font-bold text-gray-500 uppercase mb-2">Notes</p>
-        <div class="bg-gray-50 p-4 rounded-lg text-gray-700">
-          <%= simple_format @inventory_item.notes %>
+  <div class="max-w-2xl mx-auto bg-paper border-[1.5px] border-rule shadow-sm">
+    <div class="h-[6px] bg-gold"></div>
+
+    <div class="p-10">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h1 class="font-serif text-4xl font-normal text-ink"><%= @inventory_item.ingredient.name %></h1>
+          <p class="text-sm text-muted mt-1 tracking-[0.04em]"><%= @inventory_item.brand %></p>
+        </div>
+        <% if @inventory_item.ingredient.category.present? %>
+          <span class="text-[9px] tracking-[0.2em] uppercase font-bold text-golddk bg-goldbg border border-gold inline-block px-2.5 py-0.5 shrink-0">
+            <%= @inventory_item.ingredient.category %>
+          </span>
+        <% end %>
+      </div>
+
+      <% if @inventory_item.photo.attached? %>
+        <%= image_tag @inventory_item.photo,
+            class: "w-full h-[240px] object-cover block border-t border-b border-rule mb-8" %>
+      <% end %>
+
+      <div class="flex items-center gap-3 mb-6">
+        <div class="flex-1 h-px bg-rule"></div>
+        <div class="w-[6px] h-[6px] bg-gold rotate-45 shrink-0"></div>
+        <div class="flex-1 h-px bg-rule"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 mb-7">
+        <div>
+          <p class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted mb-1">Size</p>
+          <p class="text-[15px] text-ink"><%= @inventory_item.size.presence || "Not specified" %></p>
+        </div>
+        <div>
+          <p class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted mb-1">Location</p>
+          <p class="text-[15px] text-ink"><%= @inventory_item.location.presence || "Not specified" %></p>
+        </div>
+        <div>
+          <p class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted mb-1">Purchase Date</p>
+          <p class="text-[15px] text-ink"><%= @inventory_item.purchase_date.strftime("%B %d, %Y") %></p>
         </div>
       </div>
-    <% end %>
 
-    <div class="flex gap-2">
-      <%= link_to "Edit this item", edit_inventory_item_path(@inventory_item), class: "rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-      <%= button_to "Remove from inventory", @inventory_item, method: :delete, class: "rounded-lg py-3 px-5 bg-red-50 text-red-600 font-medium", data: { confirm: "Are you sure?" } %>
-      <%= link_to "Back to inventory", inventory_items_path, class: "ml-auto rounded-lg py-3 px-5 bg-blue-600 text-white font-medium" %>
+      <% if @inventory_item.notes.present? %>
+        <p class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted mb-2">Notes</p>
+        <div class="bg-cream border border-rule px-6 py-5 text-sm leading-relaxed text-ink mb-7">
+          <%= simple_format @inventory_item.notes %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex gap-3 items-center flex-wrap px-10 py-5 border-t-[1.5px] border-parchment bg-cream">
+      <%= link_to "Edit", edit_inventory_item_path(@inventory_item),
+          class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline text-muted border-[1.5px] border-rule px-4 py-2.5 hover:text-ink hover:border-ink" %>
+      <%= button_to "Remove", @inventory_item, method: :delete,
+          class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold bg-rosebg text-rosedk border-[1.5px] border-rose px-4 py-2.5 cursor-pointer hover:bg-rose hover:text-paper",
+          data: { confirm: "Are you sure you want to remove this item?" } %>
+      <%= link_to "Back to Inventory", inventory_items_path,
+          class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline bg-sagedk text-paper border-[1.5px] border-sagedk px-4 py-2.5 ml-auto hover:bg-sage hover:border-sage" %>
     </div>
   </div>
 </div>

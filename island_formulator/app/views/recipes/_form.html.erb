@@ -1,122 +1,115 @@
 <%= form_with(model: recipe, class: "contents") do |form| %>
-  <% if recipe.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+<div class="max-w-3xl bg-paper border-[1.5px] border-rule shadow-sm">
+  <div class="h-[5px] bg-sage"></div>
+  <div class="p-10">
 
-      <ul class="list-disc ml-6">
-        <% recipe.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-<div class="bg-white shadow p-6 rounded-lg">
-  <%= form.label :photo, "Recipe Photo", class: "block font-bold text-gray-700 mb-2" %>
-  <div class="flex items-center justify-center w-full">
-    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-      <div class="flex flex-col items-center justify-center pt-5 pb-6">
-        <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-        </svg>
-        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-        <p class="text-xs text-gray-500">PNG, JPG or GIF</p>
+    <% if recipe.errors.any? %>
+      <div class="bg-rosebg border-[1.5px] border-rose px-5 py-4 mb-6">
+        <h2 class="text-[12px] tracking-[0.1em] uppercase font-bold text-rosedk mb-2">
+          <%= pluralize(recipe.errors.count, "error") %> prevented this recipe from being saved
+        </h2>
+        <ul class="list-disc pl-5">
+          <% recipe.errors.each do |error| %>
+            <li class="text-[13px] text-rosedk mb-1"><%= error.full_message %></li>
+          <% end %>
+        </ul>
       </div>
-      <%= form.file_field :photo, accept: "image/*", class: "hidden" %>
-    </label>
-  </div>
-  <% if recipe.photo.attached? %>
-    <p class="mt-2 text-sm text-green-600">✓ Current photo: <%= recipe.photo.filename %></p>
-  <% end %>
-</div>
+    <% end %>
 
- <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title,
-                    class: [
-                      "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                      {
-                        "border-gray-400 focus:outline-blue-600":
-                          recipe.errors[:title].none?,
-                        "border-red-400 focus:outline-red-600":
-                          recipe.errors[:title].any?,
-                      },
-                    ] %>
-  </div>
+    <%# Photo %>
+    <div class="mb-6">
+      <%= form.label :photo, "Recipe Photo",
+          class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+      <label class="block bg-parchment border-2 border-dashed border-rule p-8 text-center cursor-pointer hover:border-sage hover:bg-sagebg">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"
+             style="width:32px;height:32px;display:block;margin:0 auto 0.6rem;color:#6E6258;">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+        </svg>
+        <p class="text-[13px] text-muted mb-1">
+          <strong class="text-sagedk">Click to upload</strong> or drag and drop
+        </p>
+        <p class="text-[11px] text-muted tracking-[0.06em]">PNG, JPG or GIF</p>
+        <%= form.file_field :photo, accept: "image/*", class: "hidden" %>
+      </label>
+      <% if recipe.photo.attached? %>
+        <p class="text-[12px] text-sagedk mt-2">✓ Current photo: <%= recipe.photo.filename %></p>
+      <% end %>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :product_type, "Product Type (e.g. Hair Oil, Body Butter)" %>
-    <%= form.text_field :product_type,
-                    class: [
-                      "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                      {
-                        "border-gray-400 focus:outline-blue-600":
-                          recipe.errors[:product_type].none?,
-                        "border-red-400 focus:outline-red-600":
-                          recipe.errors[:product_type].any?,
-                      },
-                    ] %>
-  </div>
+    <%# Title %>
+    <div class="mb-6">
+      <%= form.label :title,
+          class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+      <%= form.text_field :title,
+          placeholder: "e.g. Whipped Lavender Body Butter",
+          class: "block w-full bg-cream border-[1.5px] #{recipe.errors[:title].any? ? 'border-rose' : 'border-rule'} px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-sage" %>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :method %>
-    <%= form.textarea :method,
-                  rows: 5,
-                  class: [
-                    "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full",
-                    {
-                      "border-gray-400 focus:outline-blue-600":
-                        recipe.errors[:method].none?,
-                      "border-red-400 focus:outline-red-600":
-                        recipe.errors[:method].any?,
-                    },
-                  ] %>
-  </div>
+    <%# Product type %>
+    <div class="mb-6">
+      <%= form.label :product_type, "Product Type",
+          class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+      <%= form.text_field :product_type,
+          placeholder: "e.g. Hair Oil, Body Butter, Face Serum",
+          class: "block w-full bg-cream border-[1.5px] #{recipe.errors[:product_type].any? ? 'border-rose' : 'border-rule'} px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-sage" %>
+    </div>
 
-  <div class="my-5">
-    <h3 class="font-bold mb-2">Ingredients</h3>
-    <p class="text-sm text-gray-500 mb-4">Select the ingredients and specify the amount needed for this recipe.</p>
+    <%# Method %>
+    <div class="mb-6">
+      <%= form.label :method,
+          class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+      <%= form.textarea :method, rows: 6,
+          placeholder: "Describe your process step by step...",
+          class: "block w-full bg-cream border-[1.5px] #{recipe.errors[:method].any? ? 'border-rose' : 'border-rule'} px-3 py-2.5 font-sans text-sm text-ink outline-none resize-y focus:border-sage" %>
+    </div>
 
-    <div class="space-y-4">
+    <%# Divider %>
+    <div class="flex items-center gap-3 my-7">
+      <div class="flex-1 h-px bg-rule"></div>
+      <div class="w-[5px] h-[5px] bg-sage rotate-45 shrink-0"></div>
+      <div class="flex-1 h-px bg-rule"></div>
+    </div>
+
+    <%# Ingredients %>
+    <div class="mb-6">
+      <p class="font-serif text-lg italic font-normal text-ink mb-1">Ingredients</p>
+      <p class="text-[12px] text-muted mb-5 tracking-[0.03em]">Select each ingredient and specify the amount needed.</p>
+
       <%= form.fields_for :recipe_ingredients do |ri_form| %>
-        <div
-          class="
-            flex flex-col md:flex-row md:items-end space-y-2 md:space-y-0 md:space-x-4
-            bg-gray-50 p-4 rounded border border-gray-200
-          "
-        >
+        <div class="flex flex-col gap-3 bg-cream border-[1.5px] border-rule p-5 mb-3 sm:flex-row sm:items-end">
           <div class="flex-1">
-            <%= ri_form.label :ingredient_id, "Ingredient", class: "block text-sm font-medium text-gray-600" %>
+            <label class="text-[9px] tracking-[0.16em] uppercase font-bold text-muted block mb-1">Ingredient</label>
             <%= ri_form.collection_select :ingredient_id,
-                                      Ingredient.all,
-                                      :id,
-                                      :name,
-                                      { prompt: "Select Ingredient" },
-                                      { class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600 bg-white" } %>
+                Ingredient.all, :id, :name,
+                { prompt: "Select ingredient" },
+                { class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-sage" } %>
           </div>
 
-          <div class="w-full md:w-48">
-            <%= ri_form.label :quantity, "Amount", class: "block text-sm font-medium text-gray-600" %>
+          <div class="sm:w-44 shrink-0">
+            <label class="text-[9px] tracking-[0.16em] uppercase font-bold text-muted block mb-1">Amount</label>
             <%= ri_form.text_field :quantity,
-                               placeholder: "e.g. 50g or 2 tbsp",
-                               class: "block shadow-sm rounded-md border border-gray-400 px-3 py-2 mt-2 w-full focus:outline-blue-600" %>
+                placeholder: "e.g. 50g, 2 tbsp",
+                class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-sage" %>
           </div>
 
           <% if ri_form.object.persisted? %>
-            <div class="flex items-center pb-2">
+            <div class="flex items-center gap-1 pb-0.5">
               <%= ri_form.check_box :_destroy,
-                                class: "h-4 w-4 text-red-600 border-gray-300 rounded" %>
-              <%= ri_form.label :_destroy,
-                            "Remove",
-                            class: "ml-2 text-red-600 text-sm font-medium" %>
+                  style: "width:13px;height:13px;accent-color:#8C2E24;cursor:pointer;flex-shrink:0;" %>
+              <%= ri_form.label :_destroy, "Remove",
+                  class: "text-[11px] tracking-[0.1em] uppercase font-bold text-rosedk cursor-pointer" %>
             </div>
           <% end %>
         </div>
       <% end %>
     </div>
+
   </div>
 
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  <div class="flex justify-end px-10 py-5 border-t-[1.5px] border-parchment bg-cream">
+    <%= form.submit class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold bg-sagedk text-paper border-[1.5px] border-sagedk px-7 py-2.5 cursor-pointer hover:bg-sage hover:border-sage" %>
   </div>
+</div>
 <% end %>
+

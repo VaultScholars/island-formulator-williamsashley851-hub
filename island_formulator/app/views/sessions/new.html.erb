@@ -1,29 +1,94 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <% if alert = flash[:alert] %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
-  <% end %>
+<% content_for :title, "Sign In" %>
 
-  <% if notice = flash[:notice] %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<div class="font-sans flex min-h-screen">
 
-  <h1 class="font-bold text-4xl">Sign in</h1>
+  <%# Left — form side %>
+  <div class="w-full lg:w-1/2 flex items-center justify-center bg-white px-10 py-16">
+    <div class="w-full max-w-sm">
 
-  <%= form_with url: session_url, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block shadow-sm rounded-md border border-gray-400 focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
-    </div>
-
-    <div class="my-5">
-      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
-    </div>
-
-    <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-      <div class="inline">
-        <%= form.submit "Sign in", class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <div class="mb-10">
+        <p class="text-[10px] tracking-[0.22em] uppercase font-bold text-muted mb-2">Island Formulator</p>
+        <h1 class="font-serif text-5xl font-normal text-ink leading-none">Welcome<br>back.</h1>
+        <div class="flex items-center gap-3 mt-5">
+          <div class="flex-1 h-px bg-rule"></div>
+          <div class="w-[5px] h-[5px] bg-coral rotate-45 shrink-0"></div>
+          <div class="flex-1 h-px bg-rule"></div>
+        </div>
       </div>
-      
-      </div>
+
+      <% if alert = flash[:alert] %>
+        <div class="bg-rosebg border-[1.5px] border-rose px-4 py-3 mb-6">
+          <p class="text-[13px] text-rosedk"><%= alert %></p>
+        </div>
+      <% end %>
+
+      <% if notice = flash[:notice] %>
+        <div class="bg-sagebg border border-sage px-4 py-3 mb-6">
+          <p class="text-[13px] text-sagedk"><%= notice %></p>
+        </div>
+      <% end %>
+
+      <%= form_with url: session_url do |form| %>
+
+        <div class="mb-5">
+          <label class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2">
+            Email Address
+          </label>
+          <%= form.email_field :email_address,
+              required: true, autofocus: true, autocomplete: "username",
+              placeholder: "you@example.com",
+              value: params[:email_address],
+              class: "block w-full bg-cream border-[1.5px] border-rule px-4 py-3 font-sans text-sm text-ink outline-none focus:border-coral" %>
+        </div>
+
+        <div class="mb-8">
+          <label class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2">
+            Password
+          </label>
+          <%= form.password_field :password,
+              required: true, autocomplete: "current-password",
+              placeholder: "Enter your password",
+              maxlength: 72,
+              class: "block w-full bg-cream border-[1.5px] border-rule px-4 py-3 font-sans text-sm text-ink outline-none focus:border-coral" %>
+        </div>
+
+        <%= form.submit "Sign In",
+            class: "w-full py-3 font-sans text-[11px] tracking-[0.2em] uppercase font-bold cursor-pointer bg-coral text-white border-none hover:bg-coraldark" %>
+
+      <% end %>
+
+      <p class="text-center text-sm text-muted mt-8">
+        Don't have an account?
+        <%= link_to "Sign up", new_user_path,
+            class: "font-bold text-coral no-underline border-b border-coral" %>
+      </p>
+
     </div>
-  <% end %>
+  </div>
+
+  <%# Right — coral side %>
+  <div class="hidden lg:flex lg:w-1/2 bg-coral relative flex-col items-center justify-center overflow-hidden px-16">
+
+    <%# Decorative circles %>
+    <div class="absolute top-[-80px] right-[-80px] w-[300px] h-[300px] rounded-full border border-white opacity-20"></div>
+    <div class="absolute bottom-[60px] left-[-60px] w-[200px] h-[200px] rounded-full border border-white opacity-15"></div>
+    <div class="absolute bottom-[180px] right-[40px] w-[120px] h-[120px] rounded-full bg-white opacity-10"></div>
+
+    <div class="relative z-10 text-center">
+      <h2 class="font-serif text-white font-normal mb-6" style="font-size:4.5rem;line-height:1;">
+        Your<br>Formula<br>Studio.
+      </h2>
+      <div class="flex items-center gap-3 justify-center mb-8">
+        <div class="flex-1 h-px bg-white opacity-30"></div>
+        <div class="w-[5px] h-[5px] bg-white rotate-45 shrink-0 opacity-60"></div>
+        <div class="flex-1 h-px bg-white opacity-30"></div>
+      </div>
+      <p class="font-sans text-white text-sm tracking-[0.1em] uppercase opacity-80">
+        Recipes · Ingredients · Batches
+      </p>
+    </div>
+
+  </div>
+
 </div>
+

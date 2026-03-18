@@ -1,22 +1,63 @@
-<% content_for :title, "Showing ingredient" %>
+<% content_for :title, @ingredient.name %>
 
-<div class="max-w-2xl mx-auto bg-white shadow rounded-lg overflow-hidden">
-  <% if @ingredient.photo.attached? %>
-    <%= image_tag @ingredient.photo, class: "w-full h-64 object-cover" %>
-  <% end %>
-  
-  <div class="p-6">
-    <h1 class="text-3xl font-bold mb-2"><%= @ingredient.name %></h1>
-    <p class="text-gray-600 mb-4"><%= @ingredient.category %></p>
-    
-    <div class="mb-6">
-      <h2 class="font-bold text-gray-700 uppercase text-xs tracking-wider mb-2">Description</h2>
-      <p class="text-gray-800"><%= @ingredient.description %></p>
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
+
+  <%= link_to "← Back to Ingredients", ingredients_path,
+      class: "text-[10px] tracking-[0.14em] uppercase font-bold text-muted no-underline border-b border-rule pb-px inline-block mb-7 hover:text-ink" %>
+
+  <div class="max-w-3xl mx-auto bg-paper border-[1.5px] border-rule shadow-sm">
+    <div class="h-[6px] bg-sage"></div>
+
+    <% if @ingredient.photo.attached? %>
+      <%= image_tag @ingredient.photo, class: "w-full h-[280px] object-cover block border-b-[1.5px] border-rule" %>
+    <% end %>
+
+    <div class="p-10">
+      <% if @ingredient.category.present? %>
+        <span class="text-[9px] tracking-[0.2em] uppercase font-bold text-sagedk bg-sagebg border border-sage inline-block px-2.5 py-0.5 mb-4">
+          <%= @ingredient.category %>
+        </span>
+      <% end %>
+      <h1 class="font-serif text-4xl font-normal text-ink mb-1"><%= @ingredient.name %></h1>
+
+      <div class="flex items-center gap-3 my-6">
+        <div class="flex-1 h-px bg-rule"></div>
+        <div class="w-[6px] h-[6px] bg-sage rotate-45 shrink-0"></div>
+        <div class="flex-1 h-px bg-rule"></div>
+      </div>
+
+      <% if @ingredient.description.present? %>
+        <p class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted mb-1">Description</p>
+        <p class="text-[15px] text-ink leading-relaxed mb-6"><%= @ingredient.description %></p>
+      <% end %>
+
+      <% if @ingredient.notes.present? %>
+        <p class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted mb-1">Notes</p>
+        <p class="text-[15px] text-ink leading-relaxed mb-6"><%= @ingredient.notes %></p>
+      <% end %>
+
+      <% if @ingredient.respond_to?(:tags) %>
+        <p class="text-[9px] tracking-[0.2em] uppercase font-bold text-muted mb-2">Tags</p>
+        <% if @ingredient.tags.any? %>
+          <div class="flex flex-wrap gap-2">
+            <% @ingredient.tags.each do |tag| %>
+              <span class="text-[9px] tracking-[0.14em] uppercase font-bold text-sagedk bg-sagebg border border-sage px-2.5 py-0.5">
+                <%= tag.name %>
+              </span>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-[15px] text-muted italic">No tags added</p>
+        <% end %>
+      <% end %>
     </div>
 
-    <div class="flex space-x-2">
-      <%= link_to 'Edit', edit_ingredient_path(@ingredient), class: "bg-blue-500 text-white px-4 py-2 rounded" %>
-      <%= link_to 'Back', ingredients_path, class: "text-gray-500 py-2" %>
+    <div class="flex gap-4 items-center px-10 py-5 border-t-[1.5px] border-parchment bg-cream">
+      <%= link_to "Edit", edit_ingredient_path(@ingredient),
+          class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold no-underline bg-sagedk text-paper border-[1.5px] border-sagedk px-5 py-2.5 hover:bg-sage hover:border-sage" %>
+      <%= link_to "Back", ingredients_path,
+          class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold no-underline text-muted border-[1.5px] border-rule px-5 py-2.5 hover:text-ink hover:border-ink" %>
     </div>
   </div>
 </div>
+

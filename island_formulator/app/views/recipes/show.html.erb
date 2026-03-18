@@ -1,53 +1,71 @@
-<% content_for :title, "Showing recipe" %>
+<% content_for :title, @recipe.title %>
 
-<div class="max-w-4xl mx-auto p-6">
-  <div class="flex justify-between items-start mb-6">
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
+
+  <%= link_to "← Back to Recipes", recipes_path,
+      class: "text-[10px] tracking-[0.14em] uppercase font-bold text-muted no-underline border-b border-rule pb-px inline-block mb-7 hover:text-ink" %>
+
+  <%# Header %>
+  <div class="flex justify-between items-start pb-5 mb-8 border-b-2 border-rule gap-8">
     <div>
-      <h1 class="text-4xl font-bold text-gray-900"><%= @recipe.title %></h1>
-      <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-2 font-semibold uppercase tracking-wide">
-        <%= @recipe.product_type %>
-      </span>
+      <h1 class="font-serif text-5xl font-normal text-ink leading-tight mb-2"><%= @recipe.title %></h1>
+      <% if @recipe.product_type.present? %>
+        <span class="text-[9px] tracking-[0.2em] uppercase font-bold text-golddk bg-goldbg border border-gold inline-block px-2.5 py-0.5">
+          <%= @recipe.product_type %>
+        </span>
+      <% end %>
     </div>
-   <div class="space-x-2">
-  <%= link_to "Edit", edit_recipe_path(@recipe), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-  <%= link_to "Back", recipes_path, class: "text-gray-600 hover:underline" %>
-
-  <!-- Week 4 button -->
-  <%= link_to "Log a New Batch", new_batch_path(recipe_id: @recipe.id),
-      class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
-</div>
+    <div class="flex gap-2 shrink-0 flex-wrap justify-end">
+      <%= link_to "Edit", edit_recipe_path(@recipe),
+          class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline text-muted border-[1.5px] border-rule px-4 py-2.5 hover:text-ink hover:border-ink" %>
+      <%= link_to "Log a Batch", new_batch_path(recipe_id: @recipe.id),
+          class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline bg-rosedk text-paper border-[1.5px] border-rosedk px-4 py-2.5 hover:bg-rose hover:border-rose" %>
+      <%= link_to "Back", recipes_path,
+          class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline text-muted border-[1.5px] border-rule px-4 py-2.5 hover:text-ink hover:border-ink" %>
+    </div>
   </div>
-  
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="md:col-span-1">
+
+  <%# Two column layout %>
+  <div class="grid grid-cols-3 gap-8">
+
+    <%# Left: photo + ingredients %>
+    <div>
       <% if @recipe.photo.attached? %>
-        <%= image_tag @recipe.photo, class: "w-full h-auto object-cover rounded-xl shadow-lg border-4 border-white" %>
+        <%= image_tag @recipe.photo, class: "w-full object-cover block border-[1.5px] border-rule" %>
       <% else %>
-        <div class="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400 italic">
-          No photo uploaded
+        <div class="w-full h-[260px] bg-parchment border-[1.5px] border-rule flex items-center justify-center">
+          <span class="font-serif italic text-muted">No photo uploaded</span>
         </div>
       <% end %>
-      
-      <div class="mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">Ingredients</h2>
-        <ul class="space-y-3">
-          <% @recipe.recipe_ingredients.each do |ri| %>
-            <li class="flex justify-between items-center">
-              <span class="font-medium text-gray-700"><%= ri.ingredient.name %></span>
-              <span class="text-gray-500 bg-gray-100 px-2 py-1 rounded text-sm"><%= ri.quantity %></span>
-            </li>
-          <% end %>
-        </ul>
+
+      <div class="bg-paper border-[1.5px] border-rule shadow-sm mt-6">
+        <div class="h-[5px] bg-sage"></div>
+        <div class="px-5 py-3 border-b border-parchment">
+          <h2 class="font-serif text-lg italic font-normal text-ink">Ingredients</h2>
+        </div>
+        <% @recipe.recipe_ingredients.each do |ri| %>
+          <div class="ms-row flex justify-between items-center px-5 py-3 border-b border-parchment last:border-b-0">
+            <span class="text-sm text-ink"><%= ri.ingredient.name %></span>
+            <span class="text-[12px] text-muted bg-parchment border border-rule px-2 py-0.5">
+              <%= ri.quantity %>
+            </span>
+          </div>
+        <% end %>
       </div>
     </div>
 
-    <div class="md:col-span-2">
-      <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 h-full">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">Method</h2>
-        <div class="prose prose-green max-w-none text-gray-700 leading-relaxed">
+    <%# Right: method %>
+    <div class="col-span-2">
+      <div class="bg-paper border-[1.5px] border-rule shadow-sm h-full">
+        <div class="h-[5px] bg-gold"></div>
+        <div class="px-7 py-4 border-b border-parchment">
+          <h2 class="font-serif text-lg italic font-normal text-ink">Method</h2>
+        </div>
+        <div class="px-7 py-6 text-[15px] leading-relaxed text-ink [&>p]:mb-4">
           <%= simple_format @recipe.method %>
         </div>
       </div>
     </div>
+
   </div>
 </div>

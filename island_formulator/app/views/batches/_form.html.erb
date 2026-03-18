@@ -1,17 +1,39 @@
 <%= form_with(model: batch, class: "contents") do |form| %>
-  <% if batch.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
+  <div class="max-w-2xl bg-paper border-[1.5px] border-rule shadow-sm">
+    <div class="h-[5px] bg-sage"></div>
+    <div class="p-10">
 
-      <ul class="list-disc ml-6">
-        <% batch.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <% if batch.errors.any? %>
+        <div class="bg-rosebg border-[1.5px] border-rose px-5 py-4 mb-6">
+          <h2 class="text-[12px] tracking-[0.1em] uppercase font-bold text-rosedk mb-2">
+            <%= pluralize(batch.errors.count, "error") %> prevented this batch from being saved
+          </h2>
+          <ul class="list-disc pl-5">
+            <% batch.errors.each do |error| %>
+              <li class="text-[13px] text-rosedk mb-1"><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-6">
+        <%= form.label :made_on, "Date Made",
+            class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+        <%= form.date_field :made_on,
+            class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-sage" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :notes, "Production Notes",
+            class: "text-[9px] tracking-[0.2em] uppercase font-bold text-muted block mb-2" %>
+        <%= form.text_area :notes, rows: 6,
+            placeholder: "e.g. Added a bit more lavender oil for scent...",
+            class: "block w-full bg-cream border-[1.5px] border-rule px-3 py-2.5 font-sans text-sm text-ink outline-none resize-y focus:border-sage" %>
+      </div>
+
     </div>
-  <% end %>
-
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <div class="flex justify-end px-10 py-5 border-t-[1.5px] border-parchment bg-cream">
+      <%= form.submit class: "font-sans text-[10px] tracking-[0.16em] uppercase font-bold bg-sagedk text-paper border-[1.5px] border-sagedk px-7 py-2.5 cursor-pointer hover:bg-sage hover:border-sage" %>
+    </div>
   </div>
 <% end %>

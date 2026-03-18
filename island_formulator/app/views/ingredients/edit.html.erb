@@ -1,10 +1,16 @@
-<% content_for :title, "Editing ingredient" %>
+<% content_for :title, "Edit Ingredient" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing ingredient</h1>
+<div class="font-sans bg-cream min-h-screen p-8 text-ink">
+  <%= link_to "← Back to Ingredients", ingredients_path,
+      class: "text-[10px] tracking-[0.14em] uppercase font-bold text-muted no-underline border-b border-rule pb-px inline-block mb-7 hover:text-ink" %>
+  <h1 class="font-serif text-4xl font-normal text-ink mb-8 pb-5 border-b-2 border-rule">Edit Ingredient</h1>
 
   <%= render "form", ingredient: @ingredient %>
 
-  <%= link_to "Show this ingredient", @ingredient, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to ingredients", ingredients_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <div class="flex gap-3 mt-5">
+    <%= link_to "View this ingredient", @ingredient,
+        class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline text-muted border-[1.5px] border-rule px-4 py-2.5 hover:text-ink hover:border-ink" %>
+    <%= link_to "Back to Ingredients", ingredients_path,
+        class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline text-muted border-[1.5px] border-rule px-4 py-2.5 hover:text-ink hover:border-ink" %>
+  </div>
 </div>
