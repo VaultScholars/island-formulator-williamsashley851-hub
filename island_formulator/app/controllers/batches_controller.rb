@@ -26,6 +26,12 @@ class BatchesController < ApplicationController
     end
   end
 
+  def destroy
+    @batch = current_user.batches.find(params[:id])
+    @batch.destroy
+    redirect_to batches_path, notice: "Batch log deleted."
+  end
+
   private
 
   def batch_params
