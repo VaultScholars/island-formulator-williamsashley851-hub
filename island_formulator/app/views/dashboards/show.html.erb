@@ -104,40 +104,6 @@
     </div>
   </div>
 
-  <%# Divider %>
-  <div class="flex items-center gap-3 mb-8">
-    <div class="flex-1 h-px bg-rule"></div>
-    <div class="w-[7px] h-[7px] bg-rose rotate-45 shrink-0"></div>
-    <div class="flex-1 h-px bg-rule"></div>
-  </div>
-
-  <%# Favourite Recipes %>
-  <div class="mb-10">
-    <div class="flex justify-between items-baseline mb-4">
-      <h2 class="font-serif text-2xl italic font-normal text-ink">♥ Favourite Recipes</h2>
-      <%= link_to "All Recipes", recipes_path,
-          class: "text-[9px] tracking-[0.13em] uppercase font-bold no-underline border-[1.5px] border-rose text-rosedk bg-rosebg px-3 py-1" %>
-    </div>
-    <div class="border-[1.5px] border-rule shadow-sm">
-      <% if @favorite_recipes.any? %>
-        <% @favorite_recipes.each do |recipe| %>
-          <div class="ms-row flex justify-between items-center px-4 py-3 border-b border-parchment bg-paper last:border-b-0">
-            <div>
-              <%= link_to recipe.title, recipe, class: "font-serif text-base font-normal text-rosedk no-underline hover:border-b hover:border-rosedk" %>
-              <p class="text-[10px] tracking-[0.05em] text-muted mt-0.5"><%= recipe.product_type %></p>
-            </div>
-            <span class="text-rose font-bold">♥</span>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="px-4 py-10 text-center font-serif italic text-muted bg-paper">
-          <p>No favourites yet.</p>
-          <p class="text-[11px] mt-2">Visit a recipe and click <span class="text-rose font-bold">♡ Favorite</span> to save it here.</p>
-        </div>
-      <% end %>
-    </div>
-  </div>
-
   <%# Quick Actions %>
   <div class="bg-sagebg border-[1.5px] border-sage p-8 text-center">
     <p class="font-serif text-[13px] tracking-[0.24em] uppercase italic font-semibold text-sagedk mb-5">Quick Actions</p>
