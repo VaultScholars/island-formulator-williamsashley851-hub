@@ -6,7 +6,9 @@ class User < ApplicationRecord
   has_many :recipes, dependent: :destroy
 
   has_many :inventory_items, dependent: :destroy   
-  has_many :batches, dependent: :destroy           
+  has_many :batches, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_recipes, through: :favorites, source: :recipe           
 
   # validations
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }

@@ -10,6 +10,7 @@ class Recipe < ApplicationRecord
   has_many :ingredients, through: :recipe_ingredients
 
   has_many :batches, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   
   # This is the magic line for our nested form!

@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   
   # Existing resources
   resources :ingredients
-  resources :recipes
+  resources :recipes do
+    resource :favorite, only: [:create, :destroy]
+  end
   
   # Week 4 resources
   resources :inventory_items

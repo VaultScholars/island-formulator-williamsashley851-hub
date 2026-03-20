@@ -18,7 +18,14 @@
     <div class="flex gap-2 shrink-0 flex-wrap justify-end">
       <%= link_to "Edit", edit_recipe_path(@recipe),
           class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline text-muted border-[1.5px] border-rule px-4 py-2.5 hover:text-ink hover:border-ink" %>
-      <%= link_to "Log a Batch", new_batch_path(recipe_id: @recipe.id),
+      <% if current_user.favorites.exists?(recipe: @recipe) %>
+  <%= button_to "♥ Unfavorite", recipe_favorite_path(@recipe), method: :delete,
+      class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold bg-rose text-paper border-[1.5px] border-rose px-4 py-2.5 cursor-pointer" %>
+<% else %>
+  <%= button_to "♡ Favorite", recipe_favorite_path(@recipe), method: :post,
+      class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold bg-rosebg text-rosedk border-[1.5px] border-rose px-4 py-2.5 cursor-pointer" %>
+<% end %>
+            <%= link_to "Log a Batch", new_batch_path(recipe_id: @recipe.id),
           class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold no-underline bg-rosedk text-paper border-[1.5px] border-rosedk px-4 py-2.5 hover:bg-rose hover:border-rose" %>
       <%= button_to "Delete", @recipe, method: :delete,
           class: "font-sans text-[10px] tracking-[0.14em] uppercase font-bold bg-rosebg text-rosedk border-[1.5px] border-rose px-4 py-2.5 cursor-pointer hover:bg-rose hover:text-paper",
