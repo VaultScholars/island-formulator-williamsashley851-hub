@@ -1,7 +1,6 @@
-<% content_for :title, "Recipes" %>
+% content_for :title, "Recipes" %>
 
 <div class="font-sans bg-cream min-h-screen p-8 text-ink">
-
   <div class="flex justify-between items-end pb-5 mb-10 border-b-2 border-rule">
     <h1 class="font-serif text-5xl font-normal text-ink">My Recipes</h1>
     <%= link_to "New Recipe", new_recipe_path,
@@ -18,6 +17,7 @@
     <div class="grid grid-cols-3 gap-7">
       <% @recipes.each do |recipe| %>
         <div class="bg-paper border-[1.5px] border-rule flex flex-col shadow-sm transition-shadow duration-200 hover:shadow-md">
+
           <% if recipe.photo.attached? %>
             <%= image_tag recipe.photo, class: "w-full h-[200px] object-cover block border-b-[1.5px] border-rule" %>
           <% else %>
@@ -39,10 +39,21 @@
             </p>
           </div>
 
-          <div class="px-5 py-3 border-t border-parchment bg-cream">
+          <div class="px-5 py-3 border-t border-parchment bg-cream flex justify-between items-center">
             <%= link_to "View Recipe →", recipe,
                 class: "text-[10px] tracking-[0.12em] uppercase font-bold text-sagedk no-underline border-b-[1.5px] border-sagedk pb-px hover:text-sage hover:border-sage" %>
+
+            <% if current_user.favorites.exists?(recipe: recipe) %>
+              <%= button_to "♥", recipe_favorite_path(recipe), method: :delete,
+                  class: "text-lg text-rose bg-transparent border-none cursor-pointer leading-none",
+                  title: "Remove from favourites" %>
+            <% else %>
+              <%= button_to "♡", recipe_favorite_path(recipe), method: :post,
+                  class: "text-lg text-muted bg-transparent border-none cursor-pointer leading-none hover:text-rose",
+                  title: "Add to favourites" %>
+            <% end %>
           </div>
+
         </div>
       <% end %>
     </div>
